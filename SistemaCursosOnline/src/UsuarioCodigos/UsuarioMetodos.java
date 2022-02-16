@@ -15,6 +15,11 @@ import java.util.logging.Logger;
 
 public class UsuarioMetodos implements UsuarioInterface{
     Statement s;
+    /* 
+    Clase Usuario Metodos sera la clase principal de usuario que sirve para obtener 
+    resultados de la base de datos y guardalos en listas, clases o mostrarlas mediante
+    la aplicacion de lo aprendido en clase sobre relacionar la BaseDatos a Java
+    */
     public UsuarioMetodos(){
         ConexionClass conexion;
         try {
@@ -25,6 +30,10 @@ public class UsuarioMetodos implements UsuarioInterface{
          }
         
     }
+    /*Este Metodo obtendra todos los usuarios guardados en la base de datos y
+    los guardara en una lista de tipo <Usuario> de esta forma se podra utilizar 
+    solo la lista para las diferentees consultas
+*/
     public List<Usuario> obtenerTodosLosUsuarios(){
         List<Usuario> lista=new ArrayList();
         try {
@@ -41,6 +50,10 @@ public class UsuarioMetodos implements UsuarioInterface{
         }
         return lista;
     }
+    /*
+    Este metodo Buscara al usuario de una lista y lo devolbera. Usando  el metodo 
+    obtenerTodosLosUsuarios() olo tenemos que buscar en la lista obtenida y devolber.
+    */
     @Override
     public Usuario buscarUsuarioPorDNI(int DNI){
         

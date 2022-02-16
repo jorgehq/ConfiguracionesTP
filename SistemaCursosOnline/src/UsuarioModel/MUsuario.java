@@ -6,7 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.*;
-
+/*
+Interfaz grafica del usuario Solo esta implementda la busqueda del usuario por
+DNI, provar con 40893402. El text Field donde muestra el resultado se tiene que mejorar
+ire buscando otras formas pero se muestra el resultado esperado.
+*/
 public class MUsuario extends JFrame implements ActionListener {
     private JLabel dni, nombre, email, telefono,formaCompra,contrasenia;
     private JButton altaUsuario, buscarUsuario;

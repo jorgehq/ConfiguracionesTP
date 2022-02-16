@@ -3,7 +3,11 @@ package Entidades;
 
 import Entidades.EnumsEntidades.EnumFormaCompra;
 
+/*
+Clase Usuario con las variables iguales a la base de datos, de esta forma se 
+guardara la info y se trabajara mediante esta clase.
 
+*/
 public class Usuario {
     
     int DNI;
