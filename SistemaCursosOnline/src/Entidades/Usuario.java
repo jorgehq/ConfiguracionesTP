@@ -80,7 +80,7 @@ public class Usuario {
     public String toString() {
         return "Usuario :" + "\nDNI=" + DNI + "\nNombre=" + Nombre + "\nEmail=" + Email +
                 "\ntelefono=" + telefono + "\nFormaCompra=" + FormaCompra.toString() +
-                "\ncontrasena=" + contrasena;
+                "\ncontrasena=" + contrasena+ "\n****************************************** \n";
     }
 
     

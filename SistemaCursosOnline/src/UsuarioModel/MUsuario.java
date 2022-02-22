@@ -1,6 +1,8 @@
 
 package UsuarioModel;
 
+import Entidades.EnumsEntidades.EnumFormaCompra;
+import Entidades.Usuario;
 import UsuarioCodigos.UsuarioMetodos;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,9 +15,12 @@ ire buscando otras formas pero se muestra el resultado esperado.
 */
 public class MUsuario extends JFrame implements ActionListener {
     private JLabel dni, nombre, email, telefono,formaCompra,contrasenia;
-    private JButton altaUsuario, buscarUsuario;
-    private JTextField textdni, textnombre, textemail, texttelefono,textformaCompra,
-            textcontrasenia, textBuscarUsuario,textResultados;
+    private JButton altaUsuario, buscarUsuario,mostrarUsuarios;
+    private JTextField textdni, textnombre, textemail, texttelefono,
+            textcontrasenia, textBuscarUsuario;
+    private JComboBox textformaCompra;
+    private JTextArea textResultados;
+    private String [] FormasCompra={"Tarjeta","Cuotas","Fijo"};
 
     public MUsuario() {
         this.setLayout(null);
@@ -53,9 +58,10 @@ public class MUsuario extends JFrame implements ActionListener {
         formaCompra = new JLabel("Forma de compra");
         formaCompra.setBounds(30, 130, 200, 30);
         add(formaCompra);
-        textformaCompra = new JTextField();
+        textformaCompra = new JComboBox(FormasCompra);
         textformaCompra.setBounds(140, 130, 120, 30);
         add(textformaCompra);
+        textformaCompra.addActionListener(this);
         
         contrasenia = new JLabel("Contraseña");
         contrasenia.setBounds(50, 160, 200, 30);
@@ -77,9 +83,19 @@ public class MUsuario extends JFrame implements ActionListener {
         textBuscarUsuario.setBounds(160, 200, 100, 30);
         add(textBuscarUsuario);
         
-        textResultados = new JTextField();
+        mostrarUsuarios= new JButton("Mostrar Usuarios");
+        mostrarUsuarios.setBounds(270, 200, 150, 30);
+        add(mostrarUsuarios);
+        mostrarUsuarios.addActionListener(this);
+
+        
+        textResultados = new JTextArea();
         textResultados.setBounds(10, 240, 365, 120);
         add(textResultados);
+        
+        JScrollPane scrol=new JScrollPane(textResultados,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrol.setBounds(10, 240, 365, 120);
+        add(scrol);
         
         
         
@@ -123,6 +139,26 @@ public class MUsuario extends JFrame implements ActionListener {
            textResultados.setText(metodos.buscarUsuarioPorDNI(Integer
                    .valueOf(textBuscarUsuario.getText())).toString());
            
+       }
+       if(e.getSource()==mostrarUsuarios){
+            UsuarioMetodos metodos=new UsuarioMetodos();
+            String texto=new String();
+            for(int i=0;i<metodos.obtenerTodosLosUsuarios().size();i++){
+                texto=texto+metodos.obtenerTodosLosUsuarios().get(i).toString();
+            }
+            textResultados.setText(texto);
+       }
+       if(e.getSource()==altaUsuario){
+           Usuario nuevo=new Usuario(Integer.valueOf(textdni.getText()),
+           textnombre.getText(),textemail.getText(),texttelefono.getText(),
+           EnumFormaCompra.valueOf(String.valueOf(textformaCompra.getSelectedItem())),textcontrasenia.getText());
+           UsuarioMetodos metodos=new UsuarioMetodos();
+           metodos.Insertar(nuevo);
+           textResultados.setText("Alta de usuario con exito con DNI "+
+                   metodos.buscarUsuarioPorDNI(nuevo.getDNI()).getDNI());   
+       }
+       if(e.getSource()==textformaCompra){
+           System.out.println(textformaCompra.getSelectedItem());
        }
 
        

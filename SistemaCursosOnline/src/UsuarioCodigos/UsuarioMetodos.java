@@ -4,6 +4,7 @@ package UsuarioCodigos;
 import Conexion.ConexionClass;
 import Entidades.EnumsEntidades.EnumFormaCompra;
 import Entidades.Usuario;
+import java.sql.PreparedStatement;
 import java.util.List;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,6 +16,7 @@ import java.util.logging.Logger;
 
 public class UsuarioMetodos implements UsuarioInterface{
     Statement s;
+    ConexionClass conn;
     /* 
     Clase Usuario Metodos sera la clase principal de usuario que sirve para obtener 
     resultados de la base de datos y guardalos en listas, clases o mostrarlas mediante
@@ -24,6 +26,7 @@ public class UsuarioMetodos implements UsuarioInterface{
         ConexionClass conexion;
         try {
             conexion = new ConexionClass();
+            conn=conexion;
             s=conexion.crearStatment();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -60,10 +63,25 @@ public class UsuarioMetodos implements UsuarioInterface{
         return obtenerTodosLosUsuarios().stream()
                 .filter(c->c.getDNI()==DNI)
                 .findFirst().orElse(new Usuario());
-   
-        
-
-    
+    }
+    @Override
+    public void Insertar(Usuario nuevo){
+         PreparedStatement rs;
+        try {
+            rs =conn.getConexion().prepareStatement("insert into usuario(DNI,Nombre,Email,telefono"
+                    +",FormaCompra,contrasena) values (?,?,?,?,?,?)");
+            rs.setInt(1,nuevo.getDNI());
+            rs.setString(2,nuevo.getNombre());
+            rs.setString(3,nuevo.getEmail());
+            rs.setString(4,nuevo.getTelefono());
+            rs.setString(5,nuevo.getFormaCompra()+"");
+            rs.setString(6,nuevo.getContrasena());
+            rs.execute();
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioMetodos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 

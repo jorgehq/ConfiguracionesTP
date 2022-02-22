@@ -28,6 +28,10 @@ public class ConexionClass {
         }
         
     }
+
+    public Connection getConexion() {
+        return conexion;
+    }
      public Statement crearStatment(){
         try{
             return conexion.createStatement();
